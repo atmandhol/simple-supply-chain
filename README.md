@@ -21,27 +21,38 @@ kubectl apply -f https://github.com/pivotal/kpack/releases/download/v0.9.4/relea
 
 ## Install Flux
 kubectl apply -f https://github.com/fluxcd/flux2/releases/latest/download/install.yaml
+```
 
-## Apply Supplychain, rbac and template manifests
+### Apply Supplychain, rbac and template manifests
+```
 kubectl apply -f rbac
 kubectl apply -f templates
 kubectl apply -f supplychain
+```
 
-# Create a workload using apps plugin and simple supply chain
+
+### Create a workload using apps plugin and simple supply chain
+```
 tanzu apps wld apply petc \
 --image springcommunity/spring-framework-petclinic \
 --label workload-type="pre-built" \
 --tail \
 --yes
+```
 
-# Create a workload using apps plugin and fancy supply chain
+### Create a workload using apps plugin and fancy supply chain
+```
 tanzu apps wld apply tanzu-java-web-app \
 --git-repo https://github.com/sample-accelerators/tanzu-java-web-app \
 --git-branch main \
 --label workload-type="from-git" \
 --tail \
 --yes
+```
 
+### Delete the workload
+```
+tanzu apps wld delete tanzu-java-web-app --yes
 ```
 
 
