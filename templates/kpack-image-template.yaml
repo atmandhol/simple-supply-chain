@@ -1,0 +1,39 @@
+---
+apiVersion: carto.run/v1alpha1
+kind: ClusterImageTemplate
+metadata:
+  name: kpack-build
+spec:
+  imagePath: .status.latestImage
+  healthRule:
+    multiMatch:
+      healthy:
+        matchConditions:
+          - status: "True"
+            type: BuilderReady
+          - status: "True"
+            type: Ready
+      unhealthy:
+        matchConditions:
+          - status: "False"
+            type: BuilderReady
+          - status: "False"
+            type: Ready
+  template:
+    apiVersion: kpack.io/v1alpha2
+    kind: Image
+    metadata:
+      name: $(workload.metadata.name)$
+    spec:
+      tag: gcr.io/adhol-playground/fancy-supply-chain/workload/$(workload.metadata.name)$
+      serviceAccountName: workload
+      builder:
+        kind: Builder
+        name: default-builder
+      source:
+        blob:
+          url: $(source.url)$
+      build:
+        env:
+        - name: BP_OCI_SOURCE
+          value: $(source.revision)$

@@ -1,0 +1,17 @@
+apiVersion: kpack.io/v1alpha2
+kind: Builder
+metadata:
+  name: default-builder
+  namespace: default
+spec:
+  serviceAccountName: workload
+  tag: gcr.io/adhol-playground/fancy-supply-chain/builder
+  stack:
+    name: base
+    kind: ClusterStack
+  store:
+    name: default
+    kind: ClusterStore
+  order:
+  - group:
+    - id: paketo-buildpacks/java

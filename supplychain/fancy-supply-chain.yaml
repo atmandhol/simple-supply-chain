@@ -9,8 +9,16 @@ spec:
     templateRef:
       kind: ClusterSourceTemplate
       name: git-source-template
+  - name: image-builder
+    templateRef:
+      kind: ClusterImageTemplate
+      name: kpack-build
+    sources:
+    - resource: git-source-provider
+      name: source
   serviceAccountRef:
     name: workload
     namespace: default
   selector:
     workload-type: from-git
+  

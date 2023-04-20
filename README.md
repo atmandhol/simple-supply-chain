@@ -19,6 +19,9 @@ kubectl apply --filename https://storage.googleapis.com/tekton-releases/pipeline
 ## Install kpack from https://github.com/pivotal/kpack/blob/main/docs/install.md
 kubectl apply -f https://github.com/pivotal/kpack/releases/download/v0.9.4/release-0.9.4.yaml
 
+## Follow the kpack tutorial to setup the rest of kpack
+## https://github.com/pivotal/kpack/blob/main/docs/tutorial.md
+
 ## Install Flux
 kubectl apply -f https://github.com/fluxcd/flux2/releases/latest/download/install.yaml
 ```
@@ -28,8 +31,17 @@ kubectl apply -f https://github.com/fluxcd/flux2/releases/latest/download/instal
 kubectl apply -f rbac
 kubectl apply -f templates
 kubectl apply -f supplychain
+kubectl apply -f kpack
 ```
 
+### Create a Registry secret
+```
+kubectl create secret docker-registry dockerhub/gcr \
+    --docker-username=user \
+    --docker-password=password \
+    --docker-server=string \
+    --namespace default
+```
 
 ### Create a workload using apps plugin and simple supply chain
 ```
