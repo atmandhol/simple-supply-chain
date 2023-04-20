@@ -1,0 +1,16 @@
+---
+apiVersion: carto.run/v1alpha1
+kind: ClusterSupplyChain
+metadata:
+  name: fancy-supply-chain
+spec:
+  resources:
+  - name: git-source-provider
+    templateRef:
+      kind: ClusterSourceTemplate
+      name: git-source-template
+  serviceAccountRef:
+    name: workload
+    namespace: default
+  selector:
+    workload-type: from-git
